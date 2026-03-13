@@ -1,46 +1,31 @@
 import Image from "next/image";
 import { Car } from "@/types";
 import { formatRupiah, companyInfo } from "@/lib/data";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, ArrowRight } from "lucide-react"; // Tambahkan ArrowRight
+import { MessageCircle, ArrowRight, Clock, UserCheck, KeySquare } from "lucide-react"; 
 
 export default function CarCard({ car }: { car: Car }) {
-  // Bikin pesan otomatis untuk WA
-  const waMessage = `Halo Fajar Trans, saya ingin bertanya tentang sewa mobil ${car.name}.`;
+  // Pesan WhatsApp Otomatis
+  const waMessage = `Halo Fajar Trans, saya ingin bertanya tentang ketersediaan sewa mobil ${car.name}.`;
   const waLink = `https://wa.me/${companyInfo.whatsapp}?text=${encodeURIComponent(waMessage)}`;
 
-  // Menentukan warna badge berdasarkan jenis layanan (Driver vs Lepas Kunci)
+  // Menentukan jenis layanan (Driver vs Lepas Kunci) untuk ikon spesifikasi
   const isWithDriver = car.duration.toLowerCase().includes("driver");
 
   return (
-    // Card Utama: Ditambah efek angkat (translate-y) dan bayangan glow kuning saat di-hover
-    <div className="group relative bg-white rounded-[2rem] border border-slate-100/80 overflow-hidden shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] transition-all duration-500 ease-out flex flex-col h-full hover:-translate-y-2">
+    <div className="group relative bg-white rounded-[2rem] border border-slate-100/80 overflow-hidden shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] transition-all duration-500 ease-out flex flex-col h-full hover:-translate-y-2">
       
-      {/* Efek Ambient Background (Aceternity Vibe) - Muncul pelan saat hover */}
-      <div className="absolute inset-0 bg-linear-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
+      {/* Efek Ambient Glow Halus di Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
 
-      {/* 1. Bagian Atas: Gambar Mobil & Badge */}
-      <div className="relative w-full h-60 bg-slate-50/50 flex items-center justify-center p-6 overflow-hidden z-10">
+      {/* --- 1. BAGIAN ATAS: SHOWROOM GAMBAR --- */}
+      <div className="relative w-full h-56 md:h-64 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-100 via-slate-50 to-white flex items-center justify-center p-8 overflow-hidden z-10">
         
-        {/* Ornamen Lingkaran Glow di belakang mobil yang membesar saat hover */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-amber-400/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-150 z-0"></div>
+        {/* Glow Kuning saat hover */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-amber-400/20 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-150 z-0"></div>
 
-        {/* Label Badge di pojok kiri atas */}
-        <div className="absolute top-5 left-5 z-20">
-          <Badge 
-            className={`px-3 py-1.5 text-[11px] font-bold tracking-wide rounded-full shadow-sm backdrop-blur-md border ${
-              isWithDriver 
-                ? "bg-amber-500/90 text-slate-950 border-amber-400 hover:bg-amber-500" 
-                : "bg-slate-900/90 text-white border-slate-700 hover:bg-slate-900"
-            }`}
-          >
-            {car.duration}
-          </Badge>
-        </div>
-        
-        {/* Gambar Mobil: Efek "Maju" (Scale & Translate-X) membuat mobil seolah berjalan */}
-        <div className="relative w-full h-full z-10 transform group-hover:scale-[1.15] group-hover:-translate-x-2 transition-all duration-500 ease-out drop-shadow-xl group-hover:drop-shadow-2xl">
+        {/* Gambar Mobil (Animasi Zoom & Bergeser) */}
+        <div className="relative w-full h-full z-10 transform group-hover:scale-110 group-hover:-translate-x-3 transition-all duration-700 ease-out drop-shadow-xl group-hover:drop-shadow-[0_20px_20px_rgba(0,0,0,0.25)]">
           <Image 
             src={car.imageUrl} 
             alt={car.name} 
@@ -51,47 +36,75 @@ export default function CarCard({ car }: { car: Car }) {
         </div>
       </div>
 
-      {/* 2. Bagian Bawah: Informasi Mobil */}
-      <div className="p-6 md:p-8 flex flex-col grow relative z-10 bg-white">
+      {/* --- 2. BAGIAN BAWAH: INFORMASI & AKSI --- */}
+      <div className="p-5 md:p-8 flex flex-col grow relative z-10 bg-white">
         
-        {/* Nama Mobil */}
-        <div className="mb-2">
-          <h3 className="text-2xl font-extrabold text-slate-900 group-hover:text-amber-600 transition-colors duration-300 line-clamp-1">
+        {/* Header: Nama Mobil */}
+        <div className="mb-5">
+          <h3 className="text-2xl font-extrabold text-slate-900 group-hover:text-amber-600 transition-colors duration-300 line-clamp-1 tracking-tight">
             {car.name}
           </h3>
+          <div className="w-12 h-1 bg-amber-500 rounded-full mt-3 transform origin-left transition-all duration-300 group-hover:w-20"></div>
         </div>
 
-        {/* Garis Aksen Bawah Judul yang memanjang saat di-hover */}
-        <div className="w-10 h-1 bg-amber-500 rounded-full mb-6 transform origin-left transition-all duration-300 group-hover:w-16"></div>
-
-        {/* Harga */}
-        <div className="w-full mb-8 grow flex flex-col">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Mulai dari</p>
-          <div className="flex items-baseline gap-1">
-            {/* Harga ikut membesar sedikit saat di-hover */}
-            <span className="text-3xl font-black text-slate-900 tracking-tight group-hover:scale-105 origin-left transition-transform duration-300">
-              {formatRupiah(car.price)}
+        {/* --- SPESIFIKASI MINI --- */}
+        <div className="grid grid-cols-2 items-center mb-6 bg-slate-50 p-2 md:p-2.5 rounded-2xl border border-slate-100/80 divide-x divide-slate-200">
+          
+          {/* Info Durasi Murni (Menampilkan data apa adanya) */}
+          <div className="flex items-center justify-center gap-1.5 md:gap-2 px-1 text-slate-600 text-xs md:text-sm font-semibold">
+            <div className="p-1.5 bg-white rounded-md shadow-sm border border-slate-100 text-amber-500 shrink-0">
+              <Clock className="w-3.5 h-3.5 md:w-4 md:h-4" />
+            </div>
+            {/* PERBAIKAN: Menampilkan car.duration langsung tanpa di-split atau ditambah string lain */}
+            <span className="text-center whitespace-normal leading-tight">
+              {car.duration}
             </span>
-            <span className="text-sm font-medium text-slate-500">/hari</span>
           </div>
+
+          {/* Info Supir/Lepas Kunci */}
+          <div className="flex items-center justify-center gap-1.5 md:gap-2 px-1 text-slate-600 text-xs md:text-sm font-semibold">
+            <div className={`p-1.5 rounded-md shadow-sm border shrink-0 ${
+              isWithDriver ? "bg-amber-50 border-amber-100 text-amber-600" : "bg-white border-slate-100 text-slate-500"
+            }`}>
+              {isWithDriver ? <UserCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> : <KeySquare className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+            </div>
+            <span className="text-center whitespace-normal leading-tight">
+              {isWithDriver ? "Dengan Supir" : "Lepas Kunci"}
+            </span>
+          </div>
+
         </div>
 
-        {/* Tombol Sewa (WhatsApp) */}
-        <div className="mt-auto">
-          <Button asChild className="w-full rounded-2xl bg-slate-950 hover:bg-amber-500 text-white hover:text-slate-950 font-bold h-14 shadow-lg shadow-slate-900/10 transition-all duration-300 group/btn overflow-hidden border border-transparent hover:border-amber-400">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-full relative z-10">
+        {/* Area Harga & Tombol */}
+        <div className="mt-auto flex flex-col gap-6">
+          
+          {/* Harga */}
+          <div className="w-full">
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Harga Sewa</p>
+            <div className="flex items-end gap-1.5">
+              <span className="text-3xl font-black text-slate-900 tracking-tighter group-hover:text-amber-500 transition-colors duration-300">
+                {formatRupiah(car.price)}
+              </span>
+              <span className="text-sm font-semibold text-slate-500 mb-1">/hari</span>
+            </div>
+          </div>
+
+          {/* Tombol Sewa */}
+          <Button asChild className="w-full rounded-xl bg-slate-950 hover:bg-amber-500 text-white hover:text-slate-950 font-bold h-14 shadow-lg shadow-slate-900/10 transition-all duration-300 group/btn overflow-hidden border border-slate-900 hover:border-amber-400">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between px-6 w-full relative z-10">
               
-              {/* Teks & Icon bergeser ke kiri, memberi ruang untuk panah */}
-              <span className="flex items-center gap-2 transform transition-transform duration-300 group-hover/btn:-translate-x-3">
-                <MessageCircle className="w-5 h-5 transition-transform duration-300 group-hover/btn:-rotate-12" />
-                Sewa Sekarang
+              <span className="flex items-center gap-3">
+                <MessageCircle className="w-5 h-5 transition-transform duration-300 group-hover/btn:-rotate-12 group-hover/btn:scale-110" />
+                <span className="text-base tracking-wide">Pesan Sekarang</span>
               </span>
               
-              {/* Panah masuk dari kanan saat tombol di-hover */}
-              <ArrowRight className="w-5 h-5 absolute right-6 opacity-0 -translate-x-4 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300" />
+              <div className="w-8 h-8 rounded-full bg-white/10 group-hover/btn:bg-white flex items-center justify-center transition-colors duration-300">
+                <ArrowRight className="w-4 h-4 text-white group-hover/btn:text-amber-500 transition-colors duration-300" />
+              </div>
             
             </a>
           </Button>
+          
         </div>
       </div>
       

@@ -1,85 +1,132 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { companyInfo } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
+import { Menu, Home, Car, Info, Phone, ChevronRight } from "lucide-react";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Efek untuk mendeteksi scroll dan mengubah tampilan Navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navLinks = [
-    { name: "Beranda", path: "/" },
-    { name: "Armada", path: "/armada" },
-    { name: "Tentang Kami", path: "/tentang-kami" },
-    { name: "Kontak", path: "/kontak" },
+    { name: "Beranda", path: "/", icon: <Home className="w-[18px] h-[18px]" /> },
+    { name: "Armada", path: "/armada", icon: <Car className="w-[18px] h-[18px]" /> },
+    { name: "Tentang", path: "/tentang-kami", icon: <Info className="w-[18px] h-[18px]" /> },
+    { name: "Kontak", path: "/kontak", icon: <Phone className="w-[18px] h-[18px]" /> },
   ];
 
   return (
-    // PERBAIKAN: Menggunakan backdrop-blur agar transparan elegan dan border bawah warna kuning sangat tipis
-    <nav className="fixed top-0 z-50 w-full bg-slate-950/80 backdrop-blur-md border-b border-amber-500/10 transition-all duration-300 py-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8">
+    <nav 
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ease-in-out
+        ${scrolled 
+          ? "bg-slate-950/70 backdrop-blur-xl border-b border-white/5 py-3 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]" 
+          : "bg-transparent py-5" // Lebih tebal dan transparan saat di paling atas
+        }
+      `}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-8">
 
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-12 h-12 md:w-14 md:h-14 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
-            <Image src="/logo.png" alt="Fajar Trans Logo" fill className="object-contain" />
+        {/* --- LOGO KIRI --- */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="relative w-10 h-10 md:w-11 md:h-11 transition-transform duration-500 group-hover:scale-105">
+            <Image src="/logo.png" alt="Fajar Trans Logo" fill className="object-contain" priority />
           </div>
-          <span className="text-xl md:text-2xl font-extrabold uppercase tracking-widest text-white group-hover:text-amber-400 transition-colors duration-300">
-            Fajar<span className="text-amber-500">Trans</span>
+          <span className="text-xl md:text-2xl font-bold tracking-tight text-white transition-colors duration-300">
+            Fajar<span className="text-amber-500 font-extrabold">Trans</span>
           </span>
         </Link>
 
-        {/* Menu Navigasi (Desktop) */}
-        <div className="hidden md:flex gap-8 items-center">
+        {/* --- MENU NAVIGASI (DESKTOP) --- */}
+        <div className="hidden lg:flex gap-1 items-center bg-white/5 backdrop-blur-md rounded-full px-2 py-1 border border-white/10">
           {navLinks.map((link) => (
-            <Link key={link.name} href={link.path} className="relative text-sm font-semibold text-slate-300 hover:text-white transition-colors group py-2 tracking-wide">
+            <Link 
+              key={link.name} 
+              href={link.path} 
+              className="relative px-5 py-2 text-[13px] font-medium text-slate-300 hover:text-amber-400 transition-colors group rounded-full hover:bg-white/5"
+            >
               {link.name}
-              {/* Garis bawah animasi tetap dipertahankan */}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 ease-out group-hover:w-full rounded-full"></span>
             </Link>
           ))}
         </div>
 
-        {/* Bagian Kanan: Tombol CTA & Mobile Menu */}
-        <div className="flex items-center gap-2">
+        {/* --- BAGIAN KANAN: CTA & MOBILE MENU --- */}
+        <div className="flex items-center gap-4">
 
-          <Button asChild className="hidden md:inline-flex rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-6 transition-all duration-300 hover:-translate-y-0.5">
+          {/* Tombol CTA Desktop (Lebih ramping) */}
+          <Button 
+            asChild 
+            className="hidden md:inline-flex rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-7 h-10 text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+          >
             <a href={`https://wa.me/${companyInfo.whatsapp}`} target="_blank" rel="noopener noreferrer">
-              Hubungi Kami
+              Pesan Sekarang
             </a>
           </Button>
 
-          {/* Mobile Menu (Hamburger) */}
-          <Sheet>
+          {/* --- MOBILE MENU (HAMBURGER & SHEET) --- */}
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-amber-500 hover:bg-white/10 rounded-full">
-                <Menu className="h-7 w-7" />
+              <Button variant="ghost" size="icon" className="lg:hidden text-slate-300 hover:text-white hover:bg-white/10 rounded-full w-10 h-10">
+                <Menu className="h-5 w-5" />
                 <span className="sr-only">Buka menu</span>
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-75 sm:w-100 bg-slate-950 border-l border-white/10 text-white">
-              <SheetTitle className="text-left mb-8 flex items-center gap-3 mt-4">
-                <div className="relative w-12 h-12">
+            <SheetContent side="right" className="w-full sm:w-[350px] bg-slate-950/95 backdrop-blur-2xl border-l border-white/10 text-white p-0">
+              
+              {/* Header Mobile Menu */}
+              <SheetHeader className="p-6 border-b border-white/5 text-left flex flex-row items-center gap-3 space-y-0">
+                <div className="relative w-10 h-10 shrink-0">
                   <Image src="/logo.png" alt="Fajar Trans Logo" fill className="object-contain" />
                 </div>
-                <span className="text-xl font-extrabold uppercase tracking-widest text-white">
-                  Fajar<span className="text-amber-500">Trans</span>
-                </span>
-              </SheetTitle>
+                <SheetTitle className="text-xl font-bold tracking-tight text-white m-0">
+                  Fajar<span className="text-amber-500 font-extrabold">Trans</span>
+                </SheetTitle>
+              </SheetHeader>
 
-              <div className="flex flex-col gap-6 mt-8">
+              {/* List Menu Mobile */}
+              <div className="flex flex-col p-4 space-y-2 mt-4">
                 {navLinks.map((link) => (
-                  <Link key={link.name} href={link.path} className="text-lg font-medium text-slate-300 hover:text-amber-500 hover:translate-x-2 transition-all duration-300">
-                    {link.name}
+                  <Link 
+                    key={link.name} 
+                    href={link.path} 
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between group p-4 rounded-2xl hover:bg-amber-500/10 border border-transparent hover:border-amber-500/20 transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-500 group-hover:bg-amber-500/20 transition-colors">
+                        {link.icon}
+                      </div>
+                      <span className="text-base font-medium text-slate-300 group-hover:text-white transition-colors">
+                        {link.name}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-amber-500 group-hover:translate-x-1 transition-all" />
                   </Link>
                 ))}
-                <div className="mt-8 pt-6 border-t border-white/10">
-                  <Button asChild className="w-full rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold h-12">
-                    <a href={`https://wa.me/${companyInfo.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                      WhatsApp Kami
-                    </a>
-                  </Button>
-                </div>
               </div>
+                
+              {/* Bottom CTA Mobile */}
+              <div className="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-slate-950 to-transparent">
+                <Button asChild className="w-full rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold h-14 text-base shadow-[0_10px_30px_-10px_rgba(245,158,11,0.5)]">
+                  <a href={`https://wa.me/${companyInfo.whatsapp}`} target="_blank" rel="noopener noreferrer">
+                    Hubungi via WhatsApp
+                  </a>
+                </Button>
+              </div>
+
             </SheetContent>
           </Sheet>
         </div>

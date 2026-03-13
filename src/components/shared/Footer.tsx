@@ -1,53 +1,75 @@
 import Link from "next/link";
 import Image from "next/image";
 import { companyInfo } from "@/lib/data";
-import { Mail, Phone, ChevronRight, Instagram, MapPin } from "lucide-react";
+import { Mail, Phone, Instagram, MapPin, ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-slate-950 text-slate-300 pt-20 pb-8 border-t border-white/5 overflow-hidden">
+    <footer className="relative bg-slate-950 pt-20 pb-8 border-t border-white/5 overflow-hidden">
       
-      {/* Efek Ambient Glow di bagian bawah */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-200 h-75 bg-amber-500/5 rounded-[100%] blur-[80px] pointer-events-none z-0"></div>
+      {/* Efek Ambient Glow (Menyilang agar lebih estetik) */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none z-0 -translate-y-1/2 -translate-x-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[150px] pointer-events-none z-0 translate-y-1/4 translate-x-1/4"></div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
+        
+        {/* --- AREA CTA BESAR (Pre-Footer) --- */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-16 mb-16 border-b border-white/10 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">
+              Siap Memulai <span className="text-amber-500">Perjalanan?</span>
+            </h2>
+            <p className="text-slate-400 text-lg">
+              Percayakan kebutuhan transportasi Anda kepada Fajar Trans. Aman, nyaman, dan selalu bisa diandalkan.
+            </p>
+          </div>
+          <a
+            href={`https://wa.me/${companyInfo.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 text-slate-950 font-extrabold rounded-full hover:bg-amber-400 transition-all duration-300 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:-translate-y-1 shrink-0 w-full lg:w-auto text-lg"
+          >
+            Hubungi Sekarang
+            <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-300" />
+          </a>
+        </div>
+
+        {/* --- MAIN FOOTER CONTENT --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
           
           {/* Kolom 1: Info Brand & Sosial Media */}
-          <div className="lg:col-span-2 pr-0 lg:pr-12">
-            <Link href="/" className="flex items-center gap-3 group mb-6">
-              <div className="relative w-12 h-12 md:w-14 md:h-14 drop-shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+          <div className="lg:col-span-5 pr-0 lg:pr-12">
+            <Link href="/" className="flex items-center gap-2.5 group mb-6 inline-flex">
+              <div className="relative w-11 h-11 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform duration-500">
                 <Image src="/logo.png" alt="Fajar Trans Logo" fill className="object-contain" />
               </div>
-              <span className="text-2xl font-extrabold uppercase tracking-widest text-white group-hover:text-amber-400 transition-colors duration-300">
-                Fajar<span className="text-amber-500">Trans</span>
+              {/* PERBAIKAN: Tipografi FajarTrans sekarang sama persis dengan Navbar */}
+              <span className="text-2xl font-bold tracking-tight text-white transition-colors duration-300">
+                Fajar<span className="text-amber-500 font-extrabold">Trans</span>
               </span>
             </Link>
-            <p className="text-slate-400 text-sm leading-relaxed mb-8 max-w-md">
-              Solusi transportasi premium di Madiun dan sekitarnya. Melayani rental mobil, paket wisata, jemput bandara, hingga ziarah wali dengan armada terbaik, aman, dan terpercaya.
+            <p className="text-slate-400 text-base leading-relaxed mb-8 max-w-md">
+              Solusi transportasi premium di Madiun. Melayani rental mobil, paket wisata, jemput bandara, hingga ziarah wali dengan armada terbaik dan supir profesional.
             </p>
             
-            {/* Jejeran Sosial Media yang Elegan */}
-            <div className="flex items-center gap-4">
-              {/* Instagram */}
+            {/* Jejeran Sosial Media */}
+            <div className="flex items-center gap-3">
               <a 
                 href="https://www.instagram.com/fajar.c?igsh=MW04M2hyYTF1NTVuaw==" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-linear-to-tr hover:from-amber-600 hover:to-amber-400 hover:border-amber-400 hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-slate-950 hover:bg-amber-500 hover:border-amber-500 hover:-translate-y-1.5 transition-all duration-300"
                 aria-label="Instagram Fajar Trans"
               >
                 <Instagram className="w-5 h-5" />
               </a>
-
-              {/* TikTok (Menggunakan SVG Presisi) */}
               <a 
                 href="https://www.tiktok.com/@fajartc?_r=1&_t=ZS-94eBc92QA6y" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-black hover:border-slate-700 hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-slate-950 hover:bg-amber-500 hover:border-amber-500 hover:-translate-y-1.5 transition-all duration-300"
                 aria-label="TikTok Fajar Trans"
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -58,65 +80,59 @@ export default function Footer() {
           </div>
 
           {/* Kolom 2: Tautan Cepat */}
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
-              Eksplorasi
-            </h4>
+          <div className="lg:col-span-3">
+            <h4 className="text-lg font-bold text-white mb-6">Navigasi</h4>
             <ul className="space-y-4">
               {[
                 { name: "Beranda", path: "/" },
                 { name: "Daftar Armada", path: "/armada" },
                 { name: "Tentang Kami", path: "/tentang-kami" },
-                { name: "Kontak", path: "/kontak" },
+                { name: "Hubungi Kami", path: "/kontak" },
               ].map((link) => (
                 <li key={link.name}>
-                  <Link href={link.path} className="group flex items-center text-sm font-medium text-slate-400 hover:text-amber-500 transition-colors">
-                    <ChevronRight className="w-4 h-4 mr-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+                  <Link href={link.path} className="group flex items-center text-base font-medium text-slate-400 hover:text-amber-500 transition-colors w-fit">
+                    <span className="w-0 h-px bg-amber-500 mr-0 transition-all duration-300 group-hover:w-4 group-hover:mr-2"></span>
+                    {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Kolom 3: Kontak (Tampilan List Interaktif) */}
-          <div>
-            <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
-              Kontak
-            </h4>
-            <ul className="space-y-5">
+          {/* Kolom 3: Kontak */}
+          <div className="lg:col-span-4">
+            <h4 className="text-lg font-bold text-white mb-6">Informasi Kontak</h4>
+            <ul className="space-y-6">
               <li>
-                <a href={`https://wa.me/${companyInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-4 text-sm text-slate-400 hover:text-amber-500 transition-colors">
-                  <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-amber-500/50 group-hover:bg-amber-500/10 transition-colors shrink-0">
-                    <Phone className="w-4 h-4 text-slate-300 group-hover:text-amber-500" />
+                <a href={`https://wa.me/${companyInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all duration-300 shrink-0">
+                    <Phone className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-0.5">WhatsApp</span>
-                    <span className="font-medium text-slate-300 group-hover:text-amber-500 transition-colors">+{companyInfo.whatsapp}</span>
+                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-1">WhatsApp</span>
+                    <span className="font-semibold text-slate-300 group-hover:text-amber-500 transition-colors text-base">+{companyInfo.whatsapp}</span>
                   </div>
                 </a>
               </li>
               <li>
-                <a href={`mailto:${companyInfo.email}`} className="group flex items-start gap-4 text-sm text-slate-400 hover:text-amber-500 transition-colors">
-                  <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-amber-500/50 group-hover:bg-amber-500/10 transition-colors shrink-0">
-                    <Mail className="w-4 h-4 text-slate-300 group-hover:text-amber-500" />
+                <a href={`mailto:${companyInfo.email}`} className="group flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all duration-300 shrink-0">
+                    <Mail className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-0.5">Email</span>
-                    <span className="font-medium text-slate-300 group-hover:text-amber-500 transition-colors">{companyInfo.email}</span>
+                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-1">Email</span>
+                    <span className="font-semibold text-slate-300 group-hover:text-amber-500 transition-colors text-base">{companyInfo.email}</span>
                   </div>
                 </a>
               </li>
               <li>
-                <div className="group flex items-start gap-4 text-sm text-slate-400">
-                  <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-slate-300" />
+                <div className="flex items-start gap-4 group">
+                  <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-slate-400 shrink-0">
+                    <MapPin className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col pt-1">
-                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-0.5">Lokasi</span>
-                    <span className="font-medium text-slate-300 leading-relaxed">Madiun, Jawa Timur<br/>Indonesia</span>
+                    <span className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-1">Lokasi</span>
+                    <span className="font-medium text-slate-300 leading-relaxed text-base">Madiun, Jawa Timur<br/>Indonesia</span>
                   </div>
                 </div>
               </li>
@@ -125,11 +141,13 @@ export default function Footer() {
 
         </div>
         
-        {/* Copyright Section */}
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
-          <p>&copy; {currentYear} <span className="text-slate-300">{companyInfo.name}</span>. Hak Cipta Dilindungi.</p>
-          <p className="flex items-center gap-1">
-            Dirancang dengan <span className="text-amber-500 text-sm animate-pulse">♥</span> untuk Perjalanan Terbaik
+        {/* --- COPYRIGHT SECTION --- */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm font-medium text-slate-500">
+            &copy; {currentYear} <span className="text-slate-300">{companyInfo.name}</span>. All rights reserved.
+          </p>
+          <p className="flex items-center gap-1 text-sm font-medium text-slate-500">
+            Dirancang dengan <span className="text-amber-500 animate-pulse">♥</span> untuk Perjalanan Terbaik
           </p>
         </div>
       </div>
