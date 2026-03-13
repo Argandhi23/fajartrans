@@ -101,7 +101,7 @@ export default function HeroSection() {
 
         <div ref={rightImageRef} className="relative w-full h-75 md:h-112.5 lg:h-137.5 order-1 lg:order-2 flex items-center justify-center">
            <Image 
-             src="/flet.png"
+             src="/rent.png"
              alt="Armada Fajar Trans" 
              fill 
              className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
