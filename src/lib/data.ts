@@ -17,7 +17,7 @@ export const carList: Car[] = [
   
   // --- KELAS MPV (Keluarga) ---
   { id: "all-new-avanza", name: "All New Avanza", price: 350000, duration: "24 Jam", imageUrl: "/images/cars/all-new-avanza.png" },
-  { id: "xenia-all-new", name: "Xenia All New", price: 350000, duration: "24 Jam", imageUrl: "/images/cars/xenia-all-new.png" },
+  { id: "xenia-all-new", name: "All New Xenia", price: 350000, duration: "24 Jam", imageUrl: "/images/cars/xenia-all-new.png" },
   { id: "new-ertiga", name: "New Ertiga", price: 350000, duration: "24 Jam", imageUrl: "/images/cars/new-ertiga.png" },
   { id: "innova-reborn", name: "Innova Reborn", price: 600000, duration: "Per Day", imageUrl: "/images/cars/innova-reborn.png" },
   
