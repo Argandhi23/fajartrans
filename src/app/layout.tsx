@@ -12,7 +12,51 @@ const poppins = Poppins({
   display: "swap"
 });
 
-// ... (metadata tetap sama, letakkan di sini)
+export const metadata: Metadata = {
+  metadataBase: new URL("https://fajartrans.vercel.app"),
+  title: {
+    default: "Fajar Trans Madiun | Rental Mobil, Paket Wisata & Jemput Bandara",
+    template: "%s | Fajar Trans Madiun",
+  },
+  description:
+    "Solusi transportasi premium di Madiun. Melayani rental mobil lepas kunci & dengan supir, paket wisata, jemput bandara, hingga ziarah wali 24 jam dengan armada terawat.",
+  keywords: [
+    "Fajar Trans",
+    "Fajar Trans Madiun",
+    "Rental Mobil Madiun",
+    "Sewa Mobil Madiun",
+    "Paket Wisata Madiun",
+    "Jemput Bandara Madiun",
+    "Ziarah Wali Madiun",
+    "Sewa Hiace Madiun",
+    "Sewa Elf Madiun",
+  ],
+  authors: [{ name: "Fajar Trans Madiun" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "Fajar Trans Madiun | Rental Mobil & Transportasi Premium",
+    description:
+      "Solusi transportasi premium di Madiun. Melayani sewa mobil, paket wisata, jemput bandara, hingga ziarah wali dengan armada terbaik dan supir profesional.",
+    siteName: "Fajar Trans Madiun",
+    locale: "id_ID",
+    type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 500,
+        height: 500,
+        alt: "Fajar Trans Madiun Logo",
+      },
+    ],
+  },
+};
 
 export default function RootLayout({
   children,
